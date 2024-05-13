@@ -3,33 +3,33 @@ package model;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtaskId = new ArrayList<>();
+    private ArrayList<Integer> subtasksId = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
 
     }
 
-    public ArrayList<Integer> getSubtaskId() {
-        return subtaskId;
+    public ArrayList<Integer> getSubtasksId() {
+        return subtasksId;
     }
 
     public ArrayList<Integer> removeSubtaskId(Integer id) {
-        subtaskId.remove(id);
-        return subtaskId;
+        subtasksId.remove(id);
+        return subtasksId;
     }
 
     public ArrayList<Integer> removeAllSubtasks() {
-        subtaskId = new ArrayList<>();
-        return subtaskId;
+        subtasksId = new ArrayList<>();
+        return subtasksId;
     }
 
-    public void setSubtaskId(ArrayList<Integer> subtaskId) {
-        this.subtaskId = subtaskId;
+    public void setSubtaskId(ArrayList<Integer> subtasksId) {
+        this.subtasksId = subtasksId;
     }
 
     public void addSubtaskId(Integer id) {
-        subtaskId.add(id);
+        subtasksId.add(id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Epic extends Task {
                 ", description=" + super.getDescription() +
                 ", status=" + super.getStatus() +
                 ", id=" + super.getId() +
-                ", subtaskId=" + subtaskId +
+                ", subtasksId=" + subtasksId +
                 '}';
     }
 }

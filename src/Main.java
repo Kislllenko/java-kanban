@@ -19,24 +19,24 @@ public class Main {
         taskManager.addNewEpic(new Epic("Путешествие", "План отдыха"));
         taskManager.addNewSubtask(new Subtask("План отдыха", "Прогулка по городу, Пляжный отдых, Подняться на гору", 6));
 
-        taskManager.getTaskList();
-        taskManager.getEpicList();
-        taskManager.getSubtaskList();
+        taskManager.getTasksList();
+        taskManager.getEpicsList();
+        taskManager.getSubtasksList();
 
         taskManager.updateTask(1, new Task("Переезд", "Собрать коробки, Упаковать цветы, Передать ключи", Status.IN_PROGRESS));
         taskManager.updateTask(2, new Task("Покупки", "Хлеб, Молоко, Корм для щенка", Status.DONE));
         taskManager.updateSubtask(4, new Subtask("Дизайн офиса", "Рефы, Визуализация, Стоимость работ", 3, Status.DONE));
         taskManager.updateSubtask(5, new Subtask("Ремонтные работы", "Покрытие полов, Покраска стен, Установка кухни", 3, Status.IN_PROGRESS));
 
-        taskManager.getTaskList();
-        taskManager.getEpicList();
-        taskManager.getSubtaskList();
+        taskManager.getTasksList();
+        taskManager.getEpicsList();
+        taskManager.getSubtasksList();
 
         taskManager.removeTaskById(1);
         taskManager.removeEpicById(3);
 
-        taskManager.getEpicList();
-        taskManager.getTaskList();
+        taskManager.getEpicsList();
+        taskManager.getTasksList();
 
     }
 }
