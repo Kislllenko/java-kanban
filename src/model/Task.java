@@ -1,6 +1,7 @@
 package model;
 
-import service.TaskManager;
+import service.InMemoryTaskManager;
+
 import java.util.Objects;
 
 public class Task {
@@ -13,7 +14,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        this.id = TaskManager.id;
+        this.id = InMemoryTaskManager.id;
     }
 
     public Task(String name, String description, Status status) {
