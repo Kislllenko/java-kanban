@@ -63,6 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeAllEpics() {
         newEpics = new HashMap<>();
+        newSubtasks = new HashMap<>();
     }
 
     @Override
@@ -189,6 +190,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeEpicById(Integer id) {
+        Epic epic = newEpics.get(id);
+        ArrayList<Integer> subtasksId = epic.getSubtasksId();
+        for (Integer subtask : subtasksId){
+            newSubtasks.remove(subtask);
+        }
+
         newEpics.remove(id);
 
     }
