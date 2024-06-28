@@ -7,18 +7,22 @@ import model.Status;
 import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class InMemoryTaskManagerTest {
 
-    static TaskManager taskManager = Managers.getDefault();
-    static HistoryManager memoryTaskManager = Managers.getDefaultHistory();
+    TaskManager taskManager;
+    HistoryManager memoryTaskManager;
 
-    @BeforeAll
-    public static void BeforeAll() {
+    @BeforeEach
+    public void BeforeAll() {
+
+        InMemoryTaskManager.id = 1;
+
+        taskManager = Managers.getDefault();
+        memoryTaskManager = Managers.getDefaultHistory();
 
         taskManager.addNewTask(new Task("Переезд", "Собрать коробки, Упаковать цветы, Передать ключи"));
         taskManager.addNewTask(new Task("Покупки", "Хлеб, Молоко, Корм для щенка"));
@@ -29,16 +33,15 @@ class InMemoryTaskManagerTest {
         taskManager.addNewSubtask(new Subtask("План отдыха", "Прогулка по городу, Пляжный отдых, Подняться на гору", 6));
     }
 
+
+
     @Test
     @Order(1)
-    void checkGetHistory10Views() {
+    void shouldAddHistoryInOrder() {
 
         taskManager.getTaskById(1);
         taskManager.getTaskById(2);
         taskManager.getEpicById(3);
-        taskManager.getEpicById(3);
-        taskManager.getEpicById(6);
-        taskManager.getEpicById(6);
         taskManager.getEpicById(6);
         taskManager.getSubtaskById(4);
         taskManager.getSubtaskById(5);
@@ -46,10 +49,12 @@ class InMemoryTaskManagerTest {
 
         List<Task> history = memoryTaskManager.getHistory();
 
+        int expectedListSize = 7;
+
         int listSize = history.size();
 
         assertAll(
-                () -> assertEquals(10, listSize,
+                () -> assertEquals(expectedListSize, listSize,
                         "Фактическое кол-во просмотров не соответствует ожидаемому"),
                 () -> assertTrue(history.toString().startsWith("[Task{name='Переезд', description=Собрать коробки, " +
                         "Упаковать цветы, Передать ключи, status=NEW, id=1}"))
@@ -57,35 +62,38 @@ class InMemoryTaskManagerTest {
 
     }
 
-
     @Test
     @Order(2)
-    void shouldDeleteOldViewIfMoreThan10Tasks() {
+    void shouldRemoveDoubleTask() {
 
         taskManager.getTaskById(1);
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
         taskManager.getTaskById(2);
         taskManager.getEpicById(3);
         taskManager.getEpicById(3);
-        taskManager.getEpicById(6);
-        taskManager.getEpicById(6);
-        taskManager.getEpicById(6);
+        taskManager.getSubtaskById(4);
         taskManager.getSubtaskById(4);
         taskManager.getSubtaskById(5);
+        taskManager.getSubtaskById(5);
+        taskManager.getEpicById(6);
+        taskManager.getEpicById(6);
         taskManager.getSubtaskById(7);
         taskManager.getSubtaskById(7);
 
         List<Task> history = memoryTaskManager.getHistory();
 
+        int expectedListSize = 7;
+
         int listSize = history.size();
 
         assertAll(
-                () -> assertEquals(10, listSize,
+                () -> assertEquals(expectedListSize, listSize,
                         "Фактическое кол-во просмотров не соответствует ожидаемому"),
-                () -> assertTrue(history.toString().startsWith("[Task{name='Покупки', description=Хлеб, " +
-                        "Молоко, Корм для щенка, status=NEW, id=2}"))
+                () -> assertTrue(history.toString().startsWith("[Task{name='Переезд', description=Собрать коробки, " +
+                        "Упаковать цветы, Передать ключи, status=NEW, id=1}"))
         );
     }
-
 
     @Test
     @Order(3)
