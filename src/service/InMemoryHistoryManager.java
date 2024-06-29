@@ -27,9 +27,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             history.removeNode(history.historyMap.get(id));
             history.historyMap.remove(id);
         } else {
-            System.out.println("Ноды не существует");
+            System.out.println("Задача отсутствует в списке");
         }
-
 
     }
 
