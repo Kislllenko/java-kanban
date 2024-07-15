@@ -13,6 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Epic> newEpics = new HashMap<>();
     private HashMap<Integer, Subtask> newSubtasks = new HashMap<>();
     public static Integer id = 1;
+
     public static Integer idCounter() {
         return id++;
     }
@@ -26,7 +27,6 @@ public class InMemoryTaskManager implements TaskManager {
             allTasks.add(newTasks.get(id).toString());
         }
 
-        System.out.println(allTasks);
         return allTasks;
     }
 
@@ -38,7 +38,6 @@ public class InMemoryTaskManager implements TaskManager {
             allEpics.add(newEpics.get(id).toString());
         }
 
-        System.out.println(allEpics);
         return allEpics;
     }
 
@@ -50,7 +49,6 @@ public class InMemoryTaskManager implements TaskManager {
             allSubtasks.add(newSubtasks.get(id).toString());
         }
 
-        System.out.println(allSubtasks);
         return allSubtasks;
     }
 
@@ -78,10 +76,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(Integer id) {
         Task task = newTasks.get(id);
-        System.out.println(task);
 
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        historyManager.add(task);
+        if (task != null) {
+            historyManager.add(task);
+        }
 
         return task;
     }
@@ -89,10 +88,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpicById(Integer id) {
         Epic epic = newEpics.get(id);
-        System.out.println(epic);
 
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        historyManager.add(epic);
+        if (epic != null) {
+            historyManager.add(epic);
+        }
 
         return epic;
     }
@@ -100,10 +100,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(Integer id) {
         Subtask subtask = newSubtasks.get(id);
-        System.out.println(subtask);
 
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        historyManager.add(subtask);
+        if (subtask != null) {
+            historyManager.add(subtask);
+        }
 
         return subtask;
     }
@@ -192,7 +193,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeEpicById(Integer id) {
         Epic epic = newEpics.get(id);
         ArrayList<Integer> subtasksId = epic.getSubtasksId();
-        for (Integer subtask : subtasksId){
+        for (Integer subtask : subtasksId) {
             newSubtasks.remove(subtask);
         }
 
@@ -223,7 +224,6 @@ public class InMemoryTaskManager implements TaskManager {
             subtasksByEpicId.add(newSubtasks.get(id).toString());
         }
 
-        System.out.println(subtasksByEpicId);
         return subtasksByEpicId;
     }
 
