@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private HashMap<Integer, Task> newTasks = new HashMap<>();
-    private HashMap<Integer, Epic> newEpics = new HashMap<>();
-    private HashMap<Integer, Subtask> newSubtasks = new HashMap<>();
+    protected HashMap<Integer, Task> newTasks = new HashMap<>();
+    protected HashMap<Integer, Epic> newEpics = new HashMap<>();
+    protected HashMap<Integer, Subtask> newSubtasks = new HashMap<>();
     public static Integer id = 1;
 
     public static Integer idCounter() {
