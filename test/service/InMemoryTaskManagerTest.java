@@ -17,7 +17,7 @@ class InMemoryTaskManagerTest {
     HistoryManager memoryTaskManager;
 
     @BeforeEach
-    public void BeforeEach() {
+    public void createTasksAndSetId() {
 
         InMemoryTaskManager.id = 1;
 
