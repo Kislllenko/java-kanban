@@ -17,7 +17,7 @@ class InMemoryTaskManagerTest {
     HistoryManager memoryTaskManager;
 
     @BeforeEach
-    public void BeforeAll() {
+    public void createTasksAndSetId() {
 
         InMemoryTaskManager.id = 1;
 
@@ -56,8 +56,7 @@ class InMemoryTaskManagerTest {
         assertAll(
                 () -> assertEquals(expectedListSize, listSize,
                         "Фактическое кол-во просмотров не соответствует ожидаемому"),
-                () -> assertTrue(history.toString().startsWith("[Task{name='Переезд', description=Собрать коробки, " +
-                        "Упаковать цветы, Передать ключи, status=NEW, id=1}"))
+                () -> assertTrue(history.toString().startsWith("[1,TASK,Переезд,NEW,Собрать коробки, Упаковать цветы, Передать ключи"))
         );
 
     }
@@ -90,8 +89,7 @@ class InMemoryTaskManagerTest {
         assertAll(
                 () -> assertEquals(expectedListSize, listSize,
                         "Фактическое кол-во просмотров не соответствует ожидаемому"),
-                () -> assertTrue(history.toString().startsWith("[Task{name='Переезд', description=Собрать коробки, " +
-                        "Упаковать цветы, Передать ключи, status=NEW, id=1}"))
+                () -> assertTrue(history.toString().startsWith("[1,TASK,Переезд,NEW,Собрать коробки, Упаковать цветы, Передать ключи"))
         );
     }
 
@@ -99,8 +97,7 @@ class InMemoryTaskManagerTest {
     @Order(3)
     void checkGetTaskById() {
         Task task = taskManager.getTaskById(1);
-        assertEquals("Task{name='Переезд', description=Собрать коробки, " +
-                        "Упаковать цветы, Передать ключи, status=NEW, id=1}",
+        assertEquals("1,TASK,Переезд,NEW,Собрать коробки, Упаковать цветы, Передать ключи",
                 task.toString());
 
     }
@@ -109,8 +106,7 @@ class InMemoryTaskManagerTest {
     @Order(4)
     void checkGetEpicById() {
         Epic epic = taskManager.getEpicById(3);
-        assertEquals("Epic{name='Ремонт квартиры', description=Ремонт, " +
-                        "Дизайн квартиры, status=NEW, id=3, subtasksId=[4, 5]}",
+        assertEquals("3,EPIC,Ремонт квартиры,NEW,Ремонт, Дизайн квартиры",
                 epic.toString());
     }
 
@@ -118,8 +114,7 @@ class InMemoryTaskManagerTest {
     @Order(5)
     void checkGetSubtaskById() {
         Subtask subtask = taskManager.getSubtaskById(4);
-        assertEquals("Subtask{name='Дизайн квартиры', description=Референсы, " +
-                        "3D визуализация, Смета, status=NEW, id=4, epicId=3}",
+        assertEquals("4,SUBTASK,Дизайн квартиры,NEW,Референсы, 3D визуализация, Смета,3",
                 subtask.toString());
     }
 

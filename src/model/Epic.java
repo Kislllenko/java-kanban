@@ -10,6 +10,14 @@ public class Epic extends Task {
 
     }
 
+    public Epic(String name, String description, int id, Status status) {
+        super(name, description, id, status);
+    }
+
+    public TaskTypes getType() {
+        return TaskTypes.EPIC;
+    }
+
     public ArrayList<Integer> getSubtasksId() {
         return subtasksId;
     }
@@ -34,12 +42,11 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "name='" + super.getName() + '\'' +
-                ", description=" + super.getDescription() +
-                ", status=" + super.getStatus() +
-                ", id=" + super.getId() +
-                ", subtasksId=" + subtasksId +
-                '}';
+        return getId() + ","
+                + TaskTypes.EPIC + ","
+                + getName() + ","
+                + getStatus() + ","
+                + getDescription();
+
     }
 }

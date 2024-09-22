@@ -17,12 +17,22 @@ public class Task {
         this.id = InMemoryTaskManager.id;
     }
 
+    public Task(String name, String description, int id, Status status) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+    }
+
     public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
         this.status = status;
     }
 
+    public TaskTypes getType() {
+        return TaskTypes.TASK;
+    }
 
     public String getName() {
         return name;
@@ -71,12 +81,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description=" + description +
-                ", status=" + status +
-                ", id=" + id +
-                '}';
-    }
+        return getId() + ","
+                + TaskTypes.TASK + ","
+                + getName() + ","
+                + getStatus() + ","
+                + getDescription();
 
+    }
 }
