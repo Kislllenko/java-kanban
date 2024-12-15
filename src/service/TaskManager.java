@@ -5,6 +5,8 @@ import model.Subtask;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
     // Получение списка всех задач
@@ -53,4 +55,12 @@ public interface TaskManager {
 
     // Получение списка всех подзадач определённого эпика.
     ArrayList<String> getAllSubtasksByEpicId(Integer epicId);
+
+    Set<Task> getPrioritizedTasks();
+
+    List<Task> getTasks();
+
+    List<Subtask> getSubtasks();
+
+    boolean taskOverlapValidation(Task task);
 }

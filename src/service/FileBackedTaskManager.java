@@ -6,10 +6,12 @@ import model.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
-    private static final String HEADER = "id,type,name,status,description,epic";
+    private static final String HEADER = "id,type,name,status,description,duration,startTime,epic";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -103,11 +105,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileWriter.write(subtask);
                 fileWriter.newLine();
             }
-
         } catch (IOException exception) {
             throw new ManagerSaveException(exception.getMessage());
         }
-
     }
 
     private static Task fromString(String value) {
@@ -117,14 +117,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = dataArray[2];
         Status status = Status.valueOf(dataArray[3]);
         String description = dataArray[4];
+        Duration duration = Duration.parse(dataArray[5]);
+        LocalDateTime startTime = LocalDateTime.parse(dataArray[6]);
 
         switch (type) {
             case TASK:
-                return new Task(name, description, id, status);
+                return new Task(name, description, id, status, duration, startTime);
             case EPIC:
-                return new Epic(name, description, id, status);
+                return new Epic(name, description, id, status, duration, startTime);
             case SUBTASK:
-                return new Subtask(name, description, id, status, Integer.parseInt(dataArray[5]));
+                return new Subtask(name, description, id, status, duration, startTime, Integer.parseInt(dataArray[7]));
             default:
                 throw new IllegalStateException("Неожиданное значение: " + type);
         }
@@ -172,7 +174,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         } catch (IOException exception) {
             throw new ManagerSaveException(exception.getMessage());
         }
-
         return fileBackedTaskManager;
     }
 }

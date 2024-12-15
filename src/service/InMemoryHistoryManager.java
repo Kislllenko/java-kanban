@@ -8,7 +8,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private static final HistoryLinkedList<Task> history = new HistoryLinkedList<>();
 
-
     @Override
     public void add(Task task) {
         Node<Task> node = new Node<>(null, task, null);
@@ -18,7 +17,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         history.linkLast(node);
         history.historyMap.put(id, history.getTail());
-
     }
 
     @Override
@@ -29,21 +27,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         } else {
             System.out.println("Задача отсутствует в списке");
         }
-
     }
 
     @Override
     public List<Task> getHistory() {
-
         return history.getTasks();
     }
 
     public static class HistoryLinkedList<T> {
-
         private static Map<Integer, Node> historyMap = new HashMap<>();
-
         private Node<T> head;
-
         private Node<T> tail;
 
         public Node<T> getTail() {
@@ -88,7 +81,5 @@ public class InMemoryHistoryManager implements HistoryManager {
                 nextNode.prev = prevNode;
             }
         }
-
     }
-
 }
