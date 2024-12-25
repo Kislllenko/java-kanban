@@ -55,7 +55,7 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
                 if (task != null) {
                     sendText(httpExchange, gson.toJson(task));
                 } else {
-                    sendNotFound(httpExchange, "Задача с id " + id.get() + " не найдена");
+                    sendNotFound(httpExchange, String.format("Задача с id %d не найдена", id.get()));
                 }
             }
         }
@@ -70,7 +70,7 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
         JsonElement jsonElement = JsonParser.parseString(body);
 
         if (!jsonElement.isJsonObject()) {
-            sendHasInteractions(httpExchange, 406, "Не удовлетворяет");
+            sendHasInteractions(httpExchange, 406, "Не поддерживаемый формат переданного объекта");
         }
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -78,10 +78,9 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
         if (pathParts.length == 2) {
             taskManager.addNewTask(task);
             if (taskManager.getTaskById(task.getId()).equals(task)) {
-                sendHasInteractions(httpExchange, 201, "Задача добавлена");
+                sendHasInteractions(httpExchange, 201, "Добавлена новая задача");
             } else {
-                sendHasInteractions(httpExchange, 406, "Задача с id" + task.getId()
-                        + "пересекается с другой задачей");
+                sendHasInteractions(httpExchange, 406, String.format("Задача с id %d пересекается с другой задачей", task.getId()));
             }
         }
 
@@ -92,8 +91,7 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
                 if (taskManager.getTaskById(task.getId()).equals(task)) {
                     sendHasInteractions(httpExchange, 201, "Задача изменена");
                 } else {
-                    sendHasInteractions(httpExchange, 406, "Задача с id" + task.getId()
-                            + "пересекается с другой задачей");
+                    sendHasInteractions(httpExchange, 406, String.format("Задача с id %d пересекается с другой задачей", task.getId()));
                 }
             }
         }

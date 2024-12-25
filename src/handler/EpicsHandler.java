@@ -54,7 +54,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
                 if (epic != null) {
                     sendText(httpExchange, gson.toJson(epic));
                 } else {
-                    sendNotFound(httpExchange, "Задача с id " + id.get() + " не найдена");
+                    sendNotFound(httpExchange, String.format("Эпик с id %d не найден", id.get()));
                 }
             }
         }
@@ -66,7 +66,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
                 if (epic != null) {
                     sendText(httpExchange, gson.toJson(taskManager.getAllSubtasksByEpicId(epic.getId())));
                 } else {
-                    sendNotFound(httpExchange, "Задача с id " + id.get() + " не найдена");
+                    sendNotFound(httpExchange, String.format("Эпик с id %d не найден", id.get()));
                 }
             }
         }
@@ -81,7 +81,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
         JsonElement jsonElement = JsonParser.parseString(body);
 
         if (!jsonElement.isJsonObject()) {
-            sendHasInteractions(httpExchange, 406, "Не удовлетворяет");
+            sendHasInteractions(httpExchange, 406, "Не поддерживаемый формат переданного объекта");
         }
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -89,7 +89,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
         if (pathParts.length == 2) {
             taskManager.addNewEpic(epic);
             if (taskManager.getEpicById(epic.getId()).equals(epic)) {
-                sendHasInteractions(httpExchange, 201, "Эпик добавлен");
+                sendHasInteractions(httpExchange, 201, "Добавлен новый эпик");
             }
         }
 
@@ -113,7 +113,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
             if (id.isPresent()) {
                 taskManager.removeEpicById(id.get());
                 if (taskManager.getEpicById(id.get()) == null) {
-                    sendHasInteractions(httpExchange, 201, "Епик удален");
+                    sendHasInteractions(httpExchange, 201, "Эпик удален");
                 }
             }
         }
