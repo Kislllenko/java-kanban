@@ -199,11 +199,10 @@ public class InMemoryTaskManager implements TaskManager {
     // Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
     @Override
     public void updateTask(Integer id, Task task) {
+        task.setId(id);
         if (taskOverlapValidation(task)) {
-            task.setId(id);
             newTasks.put(id, task);
         } else {
-            task.setId(id);
             newTasks.put(id, task);
             updatePrioritizedTasks();
         }
@@ -324,6 +323,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getTasks() {
         return new ArrayList<>(newTasks.values());
+    }
+
+    @Override
+    public List<Epic> getEpics() {
+        return new ArrayList<>(newEpics.values());
     }
 
     @Override
